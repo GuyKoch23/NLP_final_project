@@ -20,7 +20,8 @@ class LLMService:
         with torch.no_grad():
             output = self.model(**inputs)
             score = output.logits.squeeze().item()  # Assuming regression output
-        
+            score = 4*score + 1 # rescale to 1-5
+
         return max(1.0, min(5.0, score))  # Clamp scores between 1 and 10
 
     def predict_aspect_scores(self, review_text: str) -> dict:
