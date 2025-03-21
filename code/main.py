@@ -3,7 +3,7 @@ from ReviewDataset import ReviewDataset
 from LLMService import LLMService
 
 def main():
-    dataset = ReviewDataset("../docs/tripadvisor_hotel_reviews_short.csv")  # Load dataset
+    dataset = ReviewDataset("docs\\tripadvisor_hotel_reviews_short.csv")  # Load dataset
     scorer = LLMService(model_path="bert-base-uncased", device="cpu")  # Initialize BERT scorer
     worker = Worker(dataset, scorer)  # Create experiment
     results_df = worker.run()  # Run experiment
