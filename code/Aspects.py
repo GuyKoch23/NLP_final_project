@@ -1,18 +1,14 @@
 class Aspects:
-    def __init__(self, aspects = 
-                 [
-                    "Room Quality",
-                    "Service Quality",
-                    "Location", 
-                    "Value for Money",
-                    "Facilities and Amenities",
-                    "Food and Dining",
-                    "Cleanliness",
-                    "Comfort",
-                    "Wi-Fi and Technology",
-                    "Atmosphere"
-                 ]
-                ):
+    def __init__(
+        self,
+        aspects=[
+            "Room Quality",
+            "Service Quality",
+            "Food and Dining",
+            "Facilities and Amenities",
+            "Cleanliness",
+        ],
+    ):
         self.aspects = aspects
 
     def getAspects(self):
