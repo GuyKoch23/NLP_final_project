@@ -1,0 +1,6 @@
+Average ABS error for direct prediction: 1.71
+Average ABS error for aspect-based prediction: 1.28
+Average square error for direct prediction: 4.42
+Average square error for aspect-based prediction: 2.19
+Aspect-based ABS averaging improves predictions!
+Aspect-based square averaging improves predictions!

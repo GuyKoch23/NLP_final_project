@@ -13,7 +13,8 @@ class Worker:
     def run(self):
         results = []
 
-        for review in self.dataset.reviews:
+        for iter, review in enumerate(self.dataset.reviews):
+            print(f"Iteration number {iter}")
             true_score = review.true_score
 
             predicted_score, predicted_score_notes = self.scorer.predict_score(
