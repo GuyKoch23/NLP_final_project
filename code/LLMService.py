@@ -57,7 +57,7 @@ class LLMService:
     def predict_score(self, review_text: str) -> float:
         """Predicts a score for the given review using Ollama LLaMA model."""
         prompt = self.SCORE_PROMPT_TEMPLATE.format(review=review_text)
-
+        notes = ""
         response = ollama.chat(
             model=self.model_name, messages=[{"role": "user", "content": prompt}]
         )
@@ -71,13 +71,15 @@ class LLMService:
         else:
             # Fallback if no valid score is found
             print(f"No valid score was found in response: '{content}'")
+            notes += "\nNo valid predict_score found"
             score = 3
 
-        return max(1.0, min(5.0, score))  # Clamp scores between 1 and 5
+        return max(1.0, min(5.0, score)), notes  # Clamp scores between 1 and 5
 
     def predict_aspect_scores(self, review_text: str) -> dict:
         """Predicts aspect-based scores and returns a dictionary of results."""
         aspect_scores = {}
+        notes = ""
         for aspect in self.Aspects.getAspects():
             prompt = self.ASPECT_PROMPT_TEMPLATE.format(
                 review=review_text, aspect=aspect
@@ -97,9 +99,11 @@ class LLMService:
                 print(
                     f"No valid score found for aspect '{aspect}' in response: '{content}'"
                 )
-                aspect_scores[aspect] = 3.0
+                notes += f"\nNo valid predict_aspect_scores found for aspect '{aspect}'"
+                aspect_scores[aspect] = 0
 
             # Ensure scores are within range
-            aspect_scores[aspect] = max(1.0, min(5.0, aspect_scores[aspect]))
+            if aspect_scores[aspect] != 0:
+                aspect_scores[aspect] = max(1.0, min(5.0, aspect_scores[aspect]))
 
-        return aspect_scores
+        return aspect_scores, notes
