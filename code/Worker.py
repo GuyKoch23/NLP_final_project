@@ -17,9 +17,7 @@ class Worker:
             print(f"Iteration number {iter}")
             true_score = review.true_score
 
-            predicted_score, predicted_score_notes = self.scorer.predict_score(
-                review.text
-            )
+            predicted_score, direct_err = self.scorer.predict_score(review.text)
             direct_distance = ScoreService.calculate_distance(
                 predicted_score, true_score
             )
@@ -27,9 +25,7 @@ class Worker:
                 predicted_score, true_score
             )
 
-            aspect_scores, aspect_scores_notes = self.scorer.predict_aspect_scores(
-                review.text
-            )
+            aspect_scores, aspects_errs = self.scorer.predict_aspect_scores(review.text)
             # Filter out zero values before calculating the mean
             non_zero_scores = [score for score in aspect_scores.values() if score != 0]
             avg_aspect_score = (
@@ -52,8 +48,8 @@ class Worker:
                     "aspect_distance": aspect_distance,
                     "aspect_square_distance": aspect_square_distance,
                     "aspect_scores": aspect_scores,
-                    "predicted_score_notes": predicted_score_notes,
-                    "aspect_scores_notes": aspect_scores_notes,
+                    "direct_err": direct_err,
+                    "aspects_errs": aspects_errs,
                 }
             )
 
